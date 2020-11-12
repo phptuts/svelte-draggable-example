@@ -71,6 +71,12 @@ var app = (function () {
     function element(name) {
         return document.createElement(name);
     }
+    function text(data) {
+        return document.createTextNode(data);
+    }
+    function space() {
+        return text(' ');
+    }
     function listen(node, event, handler, options) {
         node.addEventListener(event, handler, options);
         return () => node.removeEventListener(event, handler, options);
@@ -418,7 +424,7 @@ var app = (function () {
     	return {
     		c() {
     			h1 = element("h1");
-    			h1.textContent = "Test Move";
+    			h1.textContent = "Drag Me";
     		},
     		m(target, anchor) {
     			insert(target, h1, anchor);
@@ -430,6 +436,8 @@ var app = (function () {
     }
 
     function create_fragment$1(ctx) {
+    	let h1;
+    	let t1;
     	let draggable;
     	let current;
 
@@ -442,9 +450,14 @@ var app = (function () {
 
     	return {
     		c() {
+    			h1 = element("h1");
+    			h1.textContent = "Draggable Example";
+    			t1 = space();
     			create_component(draggable.$$.fragment);
     		},
     		m(target, anchor) {
+    			insert(target, h1, anchor);
+    			insert(target, t1, anchor);
     			mount_component(draggable, target, anchor);
     			current = true;
     		},
@@ -467,6 +480,8 @@ var app = (function () {
     			current = false;
     		},
     		d(detaching) {
+    			if (detaching) detach(h1);
+    			if (detaching) detach(t1);
     			destroy_component(draggable, detaching);
     		}
     	};
