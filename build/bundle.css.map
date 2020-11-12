@@ -1,0 +1,12 @@
+{
+  "version": 3,
+  "file": "bundle.css",
+  "sources": [
+    "Draggable.svelte"
+  ],
+  "sourcesContent": [
+    "<script>\n    // 1) Create a component name Draggable\n    // 2) Create a section with an class dragable\n    // 3) Add a border around draggable with cursor move and also absolute position the section\n    // 4) Add a slot inside draggable to make it so other components can use it\n    // 5) Add the window component\n    // 6) Add a variable named moving and set it to false\n    // 7) Add 2 export variables top and left.  I will default mine to 300, 300.\n    // 8) Use those variables to control the position \n    // 9) Add a mouse down event to the section to know when the mouse is down.  Set the moving to true.\n    // 10) Add a mousemove event to window to trigger moving; use the movementX and movementY to control add to the left and top variables if the it's moving\n    // 11) Add a on mouse up event to the window turn off dragging\n    export let left = 300;\n    export let top = 300;\n    let moving = false;\n\n    function onMouseDown() {\n        moving = true;\n        console.log('moving');\n    }\n    function onMove(e) {\n        if (moving) {\n            top += e.movementY;\n            left += e.movementX;\n        }\n    }\n\n    function onMouseUp() {\n        moving = false;\n    }\n</script>\n\n<style>\n    .draggable {\n        border: solid gray 1px;\n        cursor: move;\n        position: absolute;\n        user-select: none;\n    }\n</style>\n\n\n<section on:mousedown={onMouseDown} style=\"left: {left}px; top: {top}px;\" class=\"draggable\">\n    <slot></slot>\n</section>\n\n<svelte:window on:mouseup={onMouseUp} on:mousemove={onMove}  />"
+  ],
+  "names": [],
+  "mappings": "AAiCI,UAAU,eAAC,CAAC,AACR,MAAM,CAAE,KAAK,CAAC,IAAI,CAAC,GAAG,CACtB,MAAM,CAAE,IAAI,CACZ,QAAQ,CAAE,QAAQ,CAClB,WAAW,CAAE,IAAI,AACrB,CAAC"
+}
